@@ -1,0 +1,18 @@
+{
+    "server_port": 8000,
+    "http_request_limiter": {
+        "use": false,
+        "max_request_per_second": 30.0
+    },
+    "db": {
+        "path" : "./server.db"
+    },
+    "code": {
+        "path" : "./code/"
+    },
+    "log" : {
+        "path": "./server.log",
+        "level": "info",
+        "format": "text"
+    }
+}
