@@ -8,6 +8,7 @@ require (
 	github.com/dlclark/regexp2 v1.7.0
 	github.com/gorilla/mux v1.8.0
 	github.com/mattn/go-sqlite3 v1.14.15
+	github.com/qustavo/dotsql v1.1.0
 	github.com/sirupsen/logrus v1.9.0
 	github.com/tidwall/gjson v1.14.3
 	github.com/tidwall/sjson v1.2.5

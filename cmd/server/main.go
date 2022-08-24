@@ -14,6 +14,7 @@ import (
 
 var CONF gjson.Result
 
+// Made by Heeyong Yoon
 type MultipleDirStaticServe struct{}
 
 func (h MultipleDirStaticServe) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +50,7 @@ func limiter(f func(http.ResponseWriter, *http.Request)) http.Handler {
 	}
 }
 
-func give_question(w http.ResponseWriter, r *http.Request) {
+func Q(w http.ResponseWriter, r *http.Request) {
 	out := ""
 	out, _ = sjson.Set(out, "success", true)
 
@@ -58,7 +59,7 @@ func give_question(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(out))
 }
 
-func judge_answer(w http.ResponseWriter, r *http.Request) {
+func A(w http.ResponseWriter, r *http.Request) {
 	content := []byte{}
 	if _, e := r.Body.Read(content); e != nil {
 		log.Println(e)
@@ -83,9 +84,9 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 
-	r.Methods(http.MethodGet).Path("/api/{project_id:[0-9]+}/{question_id:[0-9]+}/q").Handler(limiter(give_question))
-	r.Methods(http.MethodPost).Path("/api/{project_id:[0-9]+}/{question_id:[0-9]+}/a").Handler(limiter(judge_answer))
-	r.Methods(http.MethodGet).Path("/api/{project_id:[0-9]+}/resource/").Handler(MultipleDirStaticServe{})
+	r.Methods(http.MethodGet).Path("/q").Handler(limiter(Q))
+	r.Methods(http.MethodPost).Path("/a").Handler(limiter(A))
+	r.Methods(http.MethodGet).Path("/resource/").Handler(MultipleDirStaticServe{})
 
 	r.Use(mux.CORSMethodMiddleware(r))
 	http.ListenAndServe(":"+CONF.Get("server_port").String(), r)
